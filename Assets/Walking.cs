@@ -5,32 +5,28 @@ using UnityEngine.UIElements;
 
 public class Walking : MonoBehaviour
 {
-    public Transform pos;
-    private float timeout = 0f;
-    private float reset = 0.2f;
+    public Rigidbody2D rb;
+    void OnColliderStay (Collider other)
+    {
+        rb.velocity = Vector3.zero;
+    }
 
     void Update()
     {
-        if(timeout > 0)
-        {
-            timeout -= Time.deltaTime;
-        }
-        else
-        {
-            move();
-            timeout = reset;
-        }
+        move();       
     }
 
     void move()
     {
         if(Input.GetKey(KeyCode.UpArrow))
-        {pos.position = new Vector3(pos.position.x,pos.position.y + 1,pos.position.z);}
+        {rb.velocity = Vector3.up * 1000  * Time.deltaTime;}
         else if(Input.GetKey(KeyCode.DownArrow))
-        {pos.position = new Vector3(pos.position.x,pos.position.y - 1,pos.position.z);}
+        {rb.velocity = Vector3.down * 1000  * Time.deltaTime;}
         else if(Input.GetKey(KeyCode.LeftArrow))
-        {pos.position = new Vector3(pos.position.x - 1,pos.position.y,pos.position.z);}
+        {rb.velocity = Vector3.left * 1000  * Time.deltaTime;}
         else if(Input.GetKey(KeyCode.RightArrow))
-        {pos.position = new Vector3(pos.position.x + 1,pos.position.y,pos.position.z);}
+        {rb.velocity = Vector3.right * 1000 * Time.deltaTime;}
+        else
+        {rb.velocity = Vector3.zero;}
     }
 }
